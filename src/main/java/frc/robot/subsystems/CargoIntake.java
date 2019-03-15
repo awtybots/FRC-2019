@@ -24,7 +24,8 @@ public class CargoIntake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public TalonSRX lift = new TalonSRX(RobotMap.cargoLift);
+  public TalonSRX lift = new TalonSRX(RobotMap.cargoLift0);
+  public TalonSRX lift1 = new TalonSRX(RobotMap.cargoLift1);
 
   public static double lowerSpeed = -0.55;
   public static double liftSpeed = .5;
@@ -45,14 +46,17 @@ public class CargoIntake extends Subsystem {
     
     if(upDown == 1){
       lift.set(ControlMode.PercentOutput, liftSpeed);
+      lift1.set(ControlMode.PercentOutput, -liftSpeed);
       System.out.println("hello awty");
     }
     else if(upDown == -1){
       lift.set(ControlMode.PercentOutput, -liftSpeed);
+      lift1.set(ControlMode.PercentOutput, liftSpeed);
       System.out.println("hello awty");
     }
     else{
       lift.set(ControlMode.PercentOutput, stallSpeed);
+      lift1.set(ControlMode.PercentOutput, -stallSpeed);
     }
   }
 
@@ -61,20 +65,25 @@ public class CargoIntake extends Subsystem {
     if(power == 1){
       if(currentPos < targetDownPos){
         lift.set(ControlMode.PercentOutput, lowerSpeed);
+        lift1.set(ControlMode.PercentOutput, -lowerSpeed);
       }
       else{
         lift.set(ControlMode.PercentOutput, stallSpeed);
+        lift1.set(ControlMode.PercentOutput, -stallSpeed);
       }
     }else if((power == 0)){
       if(currentPos > targetUpPos + 250){
 
         lift.set(ControlMode.PercentOutput, liftSpeed);
+        lift1.set(ControlMode.PercentOutput, -liftSpeed);
       }
       else{
         lift.set(ControlMode.PercentOutput, 0);
+        lift1.set(ControlMode.PercentOutput, 0);
       }
     }else{
       lift.set(ControlMode.PercentOutput, 0);
+      lift1.set(ControlMode.PercentOutput, 0);
     }
   }
 

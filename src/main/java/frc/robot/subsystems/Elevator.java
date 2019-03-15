@@ -65,7 +65,9 @@ public class Elevator extends Subsystem {
   }
 
   public void basicElevator(int power){
-
+    if(topLeft.getSelectedSensorPosition(0) - 3000 < 92000){
+      return;
+    }
     if(power == -1){
       topLeft.set(ControlMode.PercentOutput, -elevUpSpeed);
     }else if(power == 1){

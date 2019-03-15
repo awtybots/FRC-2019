@@ -142,6 +142,6 @@ public class OI {
 
 	btnX2.whenPressed(new SmartElevator(48750));
 	btnY2.whenPressed(new SmartElevator(92500));
-	btnB.whenPressed(new SmartElevator(5000));															
+	btnB.whenPressed(new SmartElevator(5000));
   }
 }
