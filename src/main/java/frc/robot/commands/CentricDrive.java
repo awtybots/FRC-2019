@@ -35,8 +35,8 @@ public class CentricDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    straight = Robot.oi.xbox.getRawAxis(4);//I flipped numbers 1 and 4
-    rotate = Robot.oi.xbox.getRawAxis(1); //don't get mad at me if this messes everything up
+    straight = Robot.oi.xbox.getRawAxis(1);//I flipped numbers 1 and 4
+    rotate = Robot.oi.xbox.getRawAxis(4); //don't get mad at me if this messes everything up
     strafe = Robot.oi.xbox.getRawAxis(0);
 
     if(Robot.oi.xbox.getRawButton(7)){
@@ -51,7 +51,7 @@ public class CentricDrive extends Command {
     strafe = straight * Math.sin(radians) + strafe * Math.cos(radians);
     straight = temp;
 
-    SmartDashboard.putNumber("Gyro Value: ", radians);
+    SmartDashboard.putNumber("Gyro Value: ", degrees);
 
     if(Math.abs(straight) < .2)
     {

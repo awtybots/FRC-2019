@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,10 +39,19 @@ public class DriveTrain extends Subsystem {
 
   public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 
+  private boolean LimelightHasValidTarget = false;
+  private double LimelightDriveCommand = 0.0;
+  private double LimelightSteerCommand = 0.0;
+
+  final double steer = .03;
+  final double drive = .3;
+  final double target_area = 13.0;
+  final double max_drive = .7;
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new HolonomicDrive());
+    setDefaultCommand(new CentricDrive());
   }
 
   public static void Holonomic(double straight, double rotate, double strafe){
@@ -68,11 +78,11 @@ public class DriveTrain extends Subsystem {
     backLeftPro.configOpenloopRamp(.5, 0);
     backLeftCim.configOpenloopRamp(.5, 0);
 
-    frontRightPro.set(ControlMode.PercentOutput, -FR1S);
-    frontRightCim.set(ControlMode.PercentOutput, FR2S);
-    frontLeftPro.set(ControlMode.PercentOutput, -FL1S);
+    frontRightPro.set(ControlMode.PercentOutput, FR1S);
+    frontRightCim.set(ControlMode.PercentOutput, -FR2S);
+    frontLeftPro.set(ControlMode.PercentOutput, FL1S);
     frontLeftCim.set(ControlMode.PercentOutput, FL2S);
-    backRightPro.set(ControlMode.PercentOutput, -BR1S);
+    backRightPro.set(ControlMode.PercentOutput, BR1S);
     backRightCim.set(ControlMode.PercentOutput, BR2S);
     backLeftPro.set(ControlMode.PercentOutput, BL1S);
     backLeftCim.set(ControlMode.PercentOutput, BL2S);
@@ -89,14 +99,14 @@ public class DriveTrain extends Subsystem {
     SmartDashboard.putNumber("Strafe Value: ", strafe);
     SmartDashboard.putNumber("Rotate Value: ", rotate);
 
-    FR1S = -straight + strafe + rotate;
-    FR2S = (-straight + strafe + rotate);
-    FL1S = straight - strafe + rotate;
-    FL2S = (straight - strafe + rotate);
-    BR1S = -straight - strafe + rotate;
-    BR2S = (-straight - strafe + rotate);
-    BL1S = straight + strafe + rotate;
-    BL2S = (straight + strafe + rotate);
+    FR1S = -straight - strafe - rotate;
+    FR2S = (-straight - strafe - rotate);
+    FL1S = straight - strafe - rotate;
+    FL2S = (straight - strafe - rotate);
+    BR1S = -straight + strafe - rotate;
+    BR2S = (-straight + strafe - rotate);
+    BL1S = straight + strafe - rotate;
+    BL2S = (straight + strafe - rotate);
 
     frontRightPro.configOpenloopRamp(.5, 0);
     frontRightCim.configOpenloopRamp(.5, 0);
@@ -109,10 +119,10 @@ public class DriveTrain extends Subsystem {
 
     frontRightPro.set(ControlMode.PercentOutput, -FR1S);
     frontRightCim.set(ControlMode.PercentOutput, FR2S);
-    frontLeftPro.set(ControlMode.PercentOutput, FL1S);
+    frontLeftPro.set(ControlMode.PercentOutput, -FL1S);
     frontLeftCim.set(ControlMode.PercentOutput, -FL2S);
     backRightPro.set(ControlMode.PercentOutput, -BR1S);
-    backRightCim.set(ControlMode.PercentOutput, BR2S);
+    backRightCim.set(ControlMode.PercentOutput, -BR2S);
     backLeftPro.set(ControlMode.PercentOutput, -BL1S);
     backLeftCim.set(ControlMode.PercentOutput, -BL2S);
 
@@ -120,5 +130,23 @@ public class DriveTrain extends Subsystem {
     SmartDashboard.putNumber("Front Left Value: ", FL1S);
     SmartDashboard.putNumber("Back Right Value: ", BR1S);
     SmartDashboard.putNumber("Back Left Value: ", BL1S);
+  }
+
+  public void LimelightTrack(){
+
+    double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0); // Has Valid Target
+    double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0); // Horizontal Offset degrees -27 to 27
+    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0); // Vertical Offset degrees -20.5 to 20.5
+    double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0); // Target Area of Screen space %
+
+    if(tv == 0.0){
+      LimelightHasValidTarget = false;
+      LimelightDriveCommand = 0.0;
+      LimelightSteerCommand = 0.0;
+      return;
+    } else if (tv == 1.0){
+      LimelightHasValidTarget = true;
+    }
+
   }
 }

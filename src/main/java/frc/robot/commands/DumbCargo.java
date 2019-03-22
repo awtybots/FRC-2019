@@ -11,16 +11,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.CargoIntake;
 
-public class MoveCargo extends Command {
+public class DumbCargo extends Command {
 
-  public int lift, power;
-
-  public MoveCargo(int move) {
-    lift = move;
+  public int power;
+  public DumbCargo(int option) {
+    power = option;
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.cargoIntake);
-  }
+   }
 
   // Called just before this Command runs the first time
   @Override
@@ -30,8 +28,7 @@ public class MoveCargo extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    Robot.cargoIntake.smartMoveIntake(lift);
+    Robot.cargoIntake.dumbCargo(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()

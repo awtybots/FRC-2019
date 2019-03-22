@@ -25,7 +25,7 @@ public class Cargo extends Subsystem {
   public static TalonSRX intake = new TalonSRX(RobotMap.cargoIntake);
 
   public static final double intakeSpeed = -.85;
-  public static final double outtakeSpeed = .65;
+  public static final double outtakeSpeed = .85;
 
   @Override
   public void initDefaultCommand() {
@@ -35,10 +35,10 @@ public class Cargo extends Subsystem {
 
   public void intakeCargo(int option){
     if(option == 1){
-      intake.set(ControlMode.PercentOutput, intakeSpeed);
+      intake.set(ControlMode.PercentOutput, outtakeSpeed);
     }
     else if(option == -1){
-    intake.set(ControlMode.PercentOutput, outtakeSpeed);
+    intake.set(ControlMode.PercentOutput, intakeSpeed);
     }
     else{
       intake.set(ControlMode.PercentOutput, 0);

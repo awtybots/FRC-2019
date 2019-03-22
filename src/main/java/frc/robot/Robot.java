@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -44,6 +47,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
     oi = new OI();
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
@@ -68,11 +72,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    
   }
 
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    //System.out.println(Robot.elevator.bottomLeft.getSelectedSensorPosition(0));
   }
 
   /**
@@ -128,7 +134,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("Elevator encoder: ", Robot.elevator.topLeft.getSelectedSensorPosition(0));
+    SmartDashboard.putNumber("Elevator encoder: ", Robot.elevator.bottomLeft.getSelectedSensorPosition(0));
     SmartDashboard.putNumber("Intake encoder: ", Robot.cargoIntake.lift.getSelectedSensorPosition(0));
     Scheduler.getInstance().run();
   }

@@ -27,13 +27,13 @@ public class RobotMap {
   public static int backLeftCim = 2;
   public static int backRightPro = 7;
   public static int backRightCim = 6;
-  public static int elevatorTopLeft = 12;
-  public static int elevatorBottomLeft = 13;
+  public static int elevatorTopLeft = 13;
+  public static int elevatorBottomLeft = 12;
   public static int elevatorTopRight = 9;
   public static int elevatorBottomRight = 10;
   public static int cargoIntake = 4;
   public static int cargoLift0 = 11;
-  public static int cargoLift1 = 15;
+  public static int cargoLift1 = 16;
 
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:

@@ -24,7 +24,7 @@ public class HatchGrabber extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    gripper.set(DoubleSolenoid.Value.kForward);
+    gripper.set(DoubleSolenoid.Value.kReverse);
     setDefaultCommand(new HatchGrab(1));
   }
 

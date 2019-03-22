@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CargoRoller;
+import frc.robot.commands.DumbCargo;
 import frc.robot.commands.DumbElevator;
 import frc.robot.commands.HatchGrab;
 import frc.robot.commands.HatchPunch;
@@ -100,48 +101,31 @@ public class OI {
   // button.whenReleased(new ExampleCommand());
 
   public OI(){
-    btnL2.whenPressed(new DumbElevator(1));
-	btnL2.whenReleased(new DumbElevator(0));
+    btnL2.whenPressed(new DumbElevator(1));  // Elevator Down
+	btnL2.whenReleased(new DumbElevator(0)); // STOP
 
-	btnR2.whenPressed(new DumbElevator(-1));
-	btnR2.whenReleased(new DumbElevator(0));
+	btnR2.whenPressed(new DumbElevator(-1)); // Elevator Up
+	btnR2.whenReleased(new DumbElevator(0)); // STOP
 
-	btnR1.whenPressed(new MoveCargo(1));
-	btnR1.whenPressed(new CargoRoller(1));
-	btnR1.whenReleased(new MoveCargo(0));
-	btnR1.whenReleased(new CargoRoller(0));
+	btnR1.whenPressed(new MoveCargo(1));   // Cargo Down
+	btnR1.whenPressed(new CargoRoller(1)); // Cargo Intake
+	btnR1.whenReleased(new MoveCargo(0));  // STOP
+	btnR1.whenReleased(new CargoRoller(0));// STOP
 
-	btnL1.whenPressed(new CargoRoller(-1));
-	btnL1.whenReleased(new CargoRoller(0));
+	btnL1.whenPressed(new CargoRoller(-1)); // Cargo Shoot
+	btnL1.whenReleased(new CargoRoller(0)); // STOP
 
-	/*btnB2.whenPressed(new CargoRoller(1));
-	btnB2.whenReleased(new CargoRoller(0));
+	btnY.toggleWhenPressed(new HatchGrab(1)); // Hatch Grip Toggle
+	btnX.whileHeld(new HatchPunch(0));        // Hatch Shoot
+	btnX.whileHeld(new HatchGrab(1)); // Hatch Grip Release
 
-	btnA2.whenPressed(new CargoRoller(-1));
-	btnA2.whenReleased(new CargoRoller(0));*/
+	btnX2.whileHeld(new SmartElevator(53250)); // Elevator -> Middle Rocket Spot
+	//btnY2.whileHeld(new SmartElevator(99790)); // Elevator -> Top Rocket Spot
+	btnY2.whileHeld(new SmartElevator(6795));   // Elevator -> Bottom Rocket Spot
 
-
-    //btnA2.whenPressed(new SmartElevator(16000)); // middle hatch slot
-		//btnB2.whenPressed(new SmartElevator(16000)); // top hatch slot
-		//btnX2.whenPressed(new SmartElevator(16000)); // middle cargo slot
-		//btnY2.whenPressed(new SmartElevator(16000)); // top cargo slot
-
-	/*btnR2.whileHeld(new MoveCargo(3050, 1));
-	btnR2.whenReleased(new MoveCargo(0, 0));
-	btnR2.whenPressed(new CargoRoller(-1));
-	btnR2.whenReleased(new CargoRoller(0));*/
-
-	/*btnR2.whenPressed(new MoveCargo(1));
-	btnR2.whenReleased(new MoveCargo(0));
-	btnL2.whenPressed(new MoveCargo(-1));
-	btnL2.whenReleased(new MoveCargo(0));*/
-
-	btnY.toggleWhenPressed(new HatchGrab(0));
-	btnX.whileHeld(new HatchPunch(0));
-	btnX.toggleWhenPressed(new HatchGrab(0));
-
-	btnX2.whenPressed(new SmartElevator(48750));
-	btnY2.whenPressed(new SmartElevator(92500));
-	btnB.whenPressed(new SmartElevator(5000));
+	btnB2.whenPressed(new DumbCargo(1));  // Cargo Step Up
+	btnB2.whenReleased(new DumbCargo(0)); // STOP
+	btnA2.whenPressed(new DumbCargo(-1)); // Cargo Step Down
+	btnA2.whenReleased(new DumbCargo(0)); // STOP
   }
 }

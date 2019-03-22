@@ -29,7 +29,7 @@ public class CargoIntake extends Subsystem {
 
   public static double lowerSpeed = -0.55;
   public static double liftSpeed = .5;
-  public static int targetDownPos = 2400;
+  public static int targetDownPos = 3100;
   public static int targetUpPos = 0;
 
   @Override
@@ -61,7 +61,7 @@ public class CargoIntake extends Subsystem {
 
   public void smartMoveIntake(int power){
     int currentPos = Math.abs(lift.getSelectedSensorPosition(0));
-    if(power == 1){
+    if(power > .3){
       if(currentPos < targetDownPos){
         lift.set(ControlMode.PercentOutput, lowerSpeed);
         lift1.set(ControlMode.PercentOutput, -lowerSpeed);
@@ -71,7 +71,7 @@ public class CargoIntake extends Subsystem {
         lift1.set(ControlMode.PercentOutput, 0);
       }
     }else if((power == 0)){
-      if(currentPos > targetUpPos + 250){
+      if(currentPos > targetUpPos + 300){
 
         lift.set(ControlMode.PercentOutput, liftSpeed);
         lift1.set(ControlMode.PercentOutput, -liftSpeed);
@@ -80,6 +80,20 @@ public class CargoIntake extends Subsystem {
         lift.set(ControlMode.PercentOutput, 0);
         lift1.set(ControlMode.PercentOutput, 0);
       }
+    }else{
+      lift.set(ControlMode.PercentOutput, 0);
+      lift1.set(ControlMode.PercentOutput, 0);
+    }
+  }
+
+  public void dumbCargo(int option)
+  {
+    if(option == 1){
+      lift.set(ControlMode.PercentOutput, -lowerSpeed);
+      lift1.set(ControlMode.PercentOutput, lowerSpeed);
+    }else if(option == -1){
+      lift.set(ControlMode.PercentOutput, lowerSpeed);
+      lift1.set(ControlMode.PercentOutput, -lowerSpeed);
     }else{
       lift.set(ControlMode.PercentOutput, 0);
       lift1.set(ControlMode.PercentOutput, 0);
