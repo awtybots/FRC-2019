@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.CentricDrive;
-import frc.robot.commands.HolonomicDrive;
+import frc.robot.commands.SplitArcade;
 
 /**
  * Add your docs here.
@@ -26,14 +26,12 @@ public class DriveTrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public static TalonSRX frontRightPro = new TalonSRX(RobotMap.frontRightPro);
-  public static TalonSRX frontRightCim = new TalonSRX(RobotMap.frontRightCim);
-  public static TalonSRX frontLeftPro = new TalonSRX(RobotMap.frontLeftPro);
-  public static TalonSRX frontLeftCim = new TalonSRX(RobotMap.frontLeftCim);
-  public static TalonSRX backRightPro = new TalonSRX(RobotMap.backRightPro);
-  public static TalonSRX backRightCim = new TalonSRX(RobotMap.backRightCim);
-  public static TalonSRX backLeftPro = new TalonSRX(RobotMap.backLeftPro);
-  public static TalonSRX backLeftCim = new TalonSRX(RobotMap.backLeftCim);
+  public static TalonSRX frontLeft = new TalonSRX(RobotMap.frontLeftDrive);
+  public static TalonSRX frontRight = new TalonSRX(RobotMap.frontRightDrive);
+  public static TalonSRX middleLeft = new TalonSRX(RobotMap.middleLeftDrive);
+  public static TalonSRX middleRight = new TalonSRX(RobotMap.middleRightDrive);
+  public static TalonSRX backLeft = new TalonSRX(RobotMap.backLeftDrive);
+  public static TalonSRX backRight = new TalonSRX(RobotMap.backRightDrive);
 
   public static double FR1S, FL1S, BR1S, BL1S, FR2S, FL2S, BR2S, BL2S;
 
@@ -51,10 +49,10 @@ public class DriveTrain extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new CentricDrive());
+    setDefaultCommand(new SplitArcade());
   }
 
-  public static void Holonomic(double straight, double rotate, double strafe){
+  /*public static void Holonomic(double straight, double rotate, double strafe){
 
     SmartDashboard.putNumber("Straigt Value: ", straight);
     SmartDashboard.putNumber("Strafe Value: ", strafe);
@@ -91,9 +89,18 @@ public class DriveTrain extends Subsystem {
     SmartDashboard.putNumber("Front Left Value: ", FL1S);
     SmartDashboard.putNumber("Back Right Value: ", BR1S);
     SmartDashboard.putNumber("Back Left Value: ", BL1S);
-  }
+  }*/
 
-  public static void CentricDrive(double straight, double strafe, double rotate){
+  public static void splitArcade(double straight, double rotate){
+    frontLeft.set(ControlMode.PercentOutput,(straight + rotate));
+    middleLeft.set(ControlMode.PercentOutput,(straight + rotate));
+    backLeft.set(ControlMode.PercentOutput,(straight + rotate));
+    frontRight.set(ControlMode.PercentOutput,(straight - rotate));
+    middleRight.set(ControlMode.PercentOutput,(straight - rotate));
+    backRight.set(ControlMode.PercentOutput,(straight - rotate));
+  }
+  
+  /*public static void CentricDrive(double straight, double strafe, double rotate){
 
     SmartDashboard.putNumber("Straight Value: ", straight);
     SmartDashboard.putNumber("Strafe Value: ", strafe);
@@ -130,7 +137,7 @@ public class DriveTrain extends Subsystem {
     SmartDashboard.putNumber("Front Left Value: ", FL1S);
     SmartDashboard.putNumber("Back Right Value: ", BR1S);
     SmartDashboard.putNumber("Back Left Value: ", BL1S);
-  }
+  }*/
 
   public void LimelightTrack(){
 

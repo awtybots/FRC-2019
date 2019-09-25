@@ -66,7 +66,7 @@ public class CentricDrive extends Command {
       rotate = 0;
     }
 
-   DriveTrain.CentricDrive(straight, strafe, rotate);
+   //DriveTrain.CentricDrive(straight, strafe, rotate);
   }
 
   // Make this return true when this Command no longer needs to run execute()

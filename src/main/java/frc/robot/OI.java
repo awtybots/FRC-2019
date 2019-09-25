@@ -10,11 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.CargoRoller;
 import frc.robot.commands.DumbCargo;
 import frc.robot.commands.DumbElevator;
-import frc.robot.commands.HatchGrab;
-import frc.robot.commands.HatchPunch;
+import frc.robot.commands.IntakeGamepiece;
 import frc.robot.commands.MoveCargo;
 //import frc.robot.commands.SmartElevator;
 import frc.robot.commands.SmartElevator;
@@ -101,31 +99,22 @@ public class OI {
   // button.whenReleased(new ExampleCommand());
 
   public OI(){
-    btnL2.whenPressed(new DumbElevator(1));  // Elevator Down
+	btnL2.whenPressed(new DumbElevator(1));  // Elevator Down
 	btnL2.whenReleased(new DumbElevator(0)); // STOP
 
 	btnR2.whenPressed(new DumbElevator(-1)); // Elevator Up
 	btnR2.whenReleased(new DumbElevator(0)); // STOP
 
 	btnR1.whenPressed(new MoveCargo(1));   // Cargo Down
-	btnR1.whenPressed(new CargoRoller(1)); // Cargo Intake
 	btnR1.whenReleased(new MoveCargo(0));  // STOP
-	btnR1.whenReleased(new CargoRoller(0));// STOP
-
-	btnL1.whenPressed(new CargoRoller(-1)); // Cargo Shoot
-	btnL1.whenReleased(new CargoRoller(0)); // STOP
-
-	btnY.toggleWhenPressed(new HatchGrab(1)); // Hatch Grip Toggle
-	btnX.whileHeld(new HatchPunch(0));        // Hatch Shoot
-	btnX.whileHeld(new HatchGrab(1)); // Hatch Grip Release
 
 	btnX2.whileHeld(new SmartElevator(53250)); // Elevator -> Middle Rocket Spot
 	//btnY2.whileHeld(new SmartElevator(99790)); // Elevator -> Top Rocket Spot
 	btnY2.whileHeld(new SmartElevator(6795));   // Elevator -> Bottom Rocket Spot
 
-	btnB2.whenPressed(new DumbCargo(1));  // Cargo Step Up
-	btnB2.whenReleased(new DumbCargo(0)); // STOP
-	btnA2.whenPressed(new DumbCargo(-1)); // Cargo Step Down
+	btnA2.whenPressed(new DumbCargo(1));  // Cargo Step Up
 	btnA2.whenReleased(new DumbCargo(0)); // STOP
+	btnB2.whenPressed(new DumbCargo(-1)); // Cargo Step Down
+	btnB2.whenReleased(new DumbCargo(0)); // STOP
   }
 }

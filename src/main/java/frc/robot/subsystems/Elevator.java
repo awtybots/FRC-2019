@@ -40,52 +40,53 @@ public class Elevator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    bottomLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    topLeft.follow(bottomLeft);
-    topRight.follow(bottomLeft);
+    topLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    bottomLeft.follow(topLeft);
+    topRight.follow(topLeft);
     topRight.setInverted(false);
-    bottomRight.follow(bottomLeft);
+    bottomRight.follow(topLeft);
     bottomRight.setInverted(false);
+    bottomLeft.setInverted(true);
 
     bottomLeft.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
 		/* Config Position Closed Loop gains in slot0, tsypically kF stays zero. */
-		bottomLeft.config_kF(Constants.kPIDLoopIdx, Constants.kGains.kF, Constants.kTimeoutMs);
-		bottomLeft.config_kP(Constants.kPIDLoopIdx, Constants.kGains.kP, Constants.kTimeoutMs);
-		bottomLeft.config_kI(Constants.kPIDLoopIdx, Constants.kGains.kI, Constants.kTimeoutMs);
-    bottomLeft.config_kD(Constants.kPIDLoopIdx, Constants.kGains.kD, Constants.kTimeoutMs);
+		topLeft.config_kF(Constants.kPIDLoopIdx, Constants.kGains.kF, Constants.kTimeoutMs);
+		topLeft.config_kP(Constants.kPIDLoopIdx, Constants.kGains.kP, Constants.kTimeoutMs);
+		topLeft.config_kI(Constants.kPIDLoopIdx, Constants.kGains.kI, Constants.kTimeoutMs);
+    topLeft.config_kD(Constants.kPIDLoopIdx, Constants.kGains.kD, Constants.kTimeoutMs);
     
-    bottomLeft.setSensorPhase(false);
-    bottomLeft.setSelectedSensorPosition(0 ,0, 10);	
+    topLeft.setSensorPhase(false);
+    topLeft.setSelectedSensorPosition(0 ,0, 10);	
     setDefaultCommand(new DumbElevator(0));
   }
 
   public void PIDElevator(int encTicks){
-    bottomLeft.set(ControlMode.Position, encTicks);
+    topLeft.set(ControlMode.Position, encTicks);
   }
 
   public void basicElevator(int power){
     if(power == -1){
-      bottomLeft.set(ControlMode.PercentOutput, -elevUpSpeed);
+      topLeft.set(ControlMode.PercentOutput, -elevUpSpeed);
     }else if(power == 1){
-      bottomLeft.set(ControlMode.PercentOutput, elevUpSpeed);
+      topLeft.set(ControlMode.PercentOutput, elevUpSpeed);
     }else{
-      bottomLeft.set(ControlMode.PercentOutput, elevStall);
+      topLeft.set(ControlMode.PercentOutput, elevStall);
     }
   }
 
   public void smartyElevator(int targetEncTicks){
     int currentPos = Math.abs(bottomLeft.getSelectedSensorPosition(0));
     if(currentPos < targetEncTicks + 2000){ // above
-      bottomLeft.set(ControlMode.PercentOutput, elevDownSpeed);
+      topLeft.set(ControlMode.PercentOutput, elevDownSpeed);
     }else if(currentPos > targetEncTicks - 2000){ // below
-      bottomLeft.set(ControlMode.PercentOutput, elevUpSpeed);
+      topLeft.set(ControlMode.PercentOutput, elevUpSpeed);
     }else{
-      bottomLeft.set(ControlMode.PercentOutput, elevStall);
+      topLeft.set(ControlMode.PercentOutput, elevStall);
     }
   }
 
   public void resetEncoder() {
-    bottomLeft.setSelectedSensorPosition(0 ,0, 10);	
+    topLeft.setSelectedSensorPosition(0 ,0, 10);	
   }
 }

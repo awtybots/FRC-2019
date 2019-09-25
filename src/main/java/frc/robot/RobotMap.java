@@ -19,29 +19,27 @@ public class RobotMap {
   // public static int leftMotor = 1;
   // public static int rightMotor = 2;
 
-  public static int frontLeftPro = 3;
-  public static int frontLeftCim = 14;
-  public static int frontRightPro = 5;
-  public static int frontRightCim = 8;
-  public static int backLeftPro = 1;
-  public static int backLeftCim = 2;
-  public static int backRightPro = 7;
-  public static int backRightCim = 6;
-  public static int elevatorTopLeft = 13;
-  public static int elevatorBottomLeft = 12;
-  public static int elevatorTopRight = 9;
-  public static int elevatorBottomRight = 10;
-  public static int cargoIntake = 4;
-  public static int cargoLift0 = 11;
-  public static int cargoLift1 = 16;
+  public static int frontLeftDrive = 1;
+  public static int middleLeftDrive = 3;
+  public static int backLeftDrive = 4;
+  public static int frontRightDrive = 12;
+  public static int middleRightDrive = 13;
+  public static int backRightDrive = 14;
+
+  public static int elevatorTopLeft = 2; //ENC
+  public static int elevatorBottomLeft = 5; //CHANGE
+  public static int elevatorTopRight = 7; //CHANGE
+  public static int elevatorBottomRight = 8; //CHANGE
+
+  public static int cargoIntake = 11; //CHANGE
+  public static int cargoLiftLeft = 10; //CHANGE
+  public static int cargoLiftRight = 9; //ENC
 
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
 
-  public static int gripperOpen = 2;
-  public static int gripperClose = 3;
-  public static int puncherOpen = 0;
-  public static int puncherClose = 1;
+  public static int armOpen = 0; //CHANGE
+  public static int armClose = 1; //CHANGE
 }

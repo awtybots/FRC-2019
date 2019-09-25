@@ -15,12 +15,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Cargo;
-import frc.robot.subsystems.CargoIntake;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeLifter;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.HatchGrabber;
-import frc.robot.subsystems.HatchPuncher;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,10 +30,8 @@ import frc.robot.subsystems.HatchPuncher;
 public class Robot extends TimedRobot {
   public static Elevator elevator = new Elevator();
   public static DriveTrain drivebase = new DriveTrain();
-  public static CargoIntake cargoIntake = new CargoIntake();
-  public static Cargo cargo = new Cargo();
-  public static HatchGrabber grabber = new HatchGrabber();
-  public static HatchPuncher puncher = new HatchPuncher();
+  public static IntakeLifter cargoIntake = new IntakeLifter();
+  public static Intake cargo = new Intake();
   public static OI oi;
 
   Command m_autonomousCommand;
@@ -95,7 +91,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
-
+    Robot.cargoIntake.rightLift.setSelectedSensorPosition(0 ,0, 10);	
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -135,7 +131,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     SmartDashboard.putNumber("Elevator encoder: ", Robot.elevator.bottomLeft.getSelectedSensorPosition(0));
-    SmartDashboard.putNumber("Intake encoder: ", Robot.cargoIntake.lift.getSelectedSensorPosition(0));
+    SmartDashboard.putNumber("Intake encoder: ", Robot.cargoIntake.leftLift.getSelectedSensorPosition(0));
     Scheduler.getInstance().run();
   }
 

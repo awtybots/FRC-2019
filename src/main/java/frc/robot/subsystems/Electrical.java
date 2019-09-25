@@ -27,7 +27,7 @@ public class Electrical extends Subsystem {
   }
 
   public Electrical(){
-    compressr = new Compressor(30);
+    compressr = new Compressor(30); //CHANGE
     compressr.setClosedLoopControl(true);
   }
   public void enableCompressor(){
